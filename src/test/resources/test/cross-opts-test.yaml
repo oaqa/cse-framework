@@ -1,0 +1,112 @@
+experiment:
+  name: base-pase-test
+  author: junit
+
+configuration:
+  inherit: db.local-cse-config
+  
+pipeline:
+  - inherit: cse.phase 
+    name: cross-opts-combination-test-25  
+    options: |       
+      - inherit: test.phase.a
+      - pipeline:
+        - inherit: test.phase.a
+        - options:
+          - inherit: test.phase.b
+          - inherit: test.phase.c
+        - options:
+          - inherit: test.phase.d
+          - inherit: base.noop
+        - options:
+            - inherit: test.phase.e
+            - pipeline:
+              - inherit: test.phase.f
+              - inherit: test.phase.g
+              - options:
+                - inherit: test.phase.alpha
+                - inherit: test.phase.i
+
+  - inherit: cse.phase 
+    name: cross-opts-combination-test-37  
+    options: |       
+      - inherit: test.phase.a
+      - pipeline:
+        - inherit: test.phase.a
+        - options:
+          - inherit: test.phase.b
+          - inherit: test.phase.c
+        - options:
+          - inherit: test.phase.d
+          - inherit: base.noop
+        - options:
+            - inherit: test.phase.e
+            - pipeline:
+              - inherit: test.phase.f
+              - inherit: test.phase.alpha
+              - options:
+                - inherit: test.phase.h
+                - inherit: test.phase.i
+
+  - inherit: cse.phase 
+    name: cross-opts-combination-test-85  
+    options: |       
+      - inherit: test.phase.a
+      - pipeline:
+        - inherit: test.phase.a
+        - options:
+          - inherit: test.phase.b
+          - inherit: test.phase.c
+        - options:
+          - inherit: test.phase.d
+          - inherit: base.noop
+        - options:
+            - inherit: test.phase.e
+            - pipeline:
+              - inherit: test.phase.f
+              - inherit: test.phase.alpha
+              - options:
+                - inherit: test.phase.h
+                - inherit: test.phase.beta
+
+  - inherit: cse.phase 
+    name: cross-opts-combination-test-31  
+    options: |       
+      - inherit: test.phase.a
+      - pipeline:
+        - inherit: test.phase.a
+        - options:
+          - inherit: test.phase.b
+          - inherit: test.phase.c
+        - options:
+          - inherit: test.phase.alpha
+          - inherit: base.noop
+        - options:
+            - inherit: test.phase.e
+            - pipeline:
+              - inherit: test.phase.f
+              - inherit: test.phase.g
+              - options:
+                - inherit: test.phase.h
+                - inherit: test.phase.i
+                
+  - inherit: cse.phase 
+    name: cross-opts-combination-test-61  
+    options: |       
+      - inherit: test.phase.a
+      - pipeline:
+        - inherit: test.phase.a
+        - options:
+          - inherit: test.phase.b
+          - inherit: test.phase.c
+        - options:
+          - inherit: test.phase.alpha
+          - inherit: base.noop
+        - options:
+            - inherit: test.phase.e
+            - pipeline:
+              - inherit: test.phase.f
+              - inherit: test.phase.g
+              - options:
+                - inherit: test.phase.h
+                - inherit: test.phase.beta

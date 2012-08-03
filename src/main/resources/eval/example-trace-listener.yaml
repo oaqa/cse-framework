@@ -1,0 +1,2 @@
+class: edu.cmu.lti.oaqa.cse.example.ExampleTraceListener
+foo: bar

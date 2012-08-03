@@ -1,0 +1,15 @@
+experiment: csv-report-experiment
+
+collection-reader:
+  inherit: db.lti-collection-reader
+  dataset: REPORT
+  subset: [0]
+  
+pipeline:
+  - inherit: base.noop
+  
+post-process: 
+  - inherit: eval.retrieval-measures-evaluator
+  - inherit: report.csv-report-generator
+    builders:
+      - inherit!report.f-measure-report-component

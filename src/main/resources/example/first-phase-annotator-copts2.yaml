@@ -1,0 +1,5 @@
+class: edu.cmu.lti.oaqa.cse.example.FirstPhaseAnnotatorA1
+foo: bar
+cross-opts:
+  parameter-a: [value500,value600]
+  parameter-b: [value700,value800]

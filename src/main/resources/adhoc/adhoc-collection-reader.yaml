@@ -1,0 +1,3 @@
+class: edu.cmu.lti.oaqa.framework.collection.adhoc.AdHocCollectionReader
+persistence-provider: |
+  inherit: db.default-persistence-provider

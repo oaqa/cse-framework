@@ -1,0 +1,2 @@
+inherit: funnel.retrieval-measures-threshold
+arg.threshold: 0.0

@@ -1,0 +1,23 @@
+# Combinatorial Options
+
+# A phase can define declarative combinatorial options 
+# by using the cross-opts element, this will combine all
+# the options specified by the named parameters, and pass 
+# each combination to the specified class, generating 
+# a new experimental option for each one.
+
+# Parameters that are specified outside of cross-opts are 
+# treated as normal parameters
+
+# In this example some of the resulting combinations are:
+# ThirdPhaseAnnotatorA1(bar,value1,value5,value6,value7)
+# ThirdPhaseAnnotatorA1(bar,value3,value5,value6,value7)
+# ThirdPhaseAnnotatorA1(bar,value2,value5,value6,value7)
+
+class: edu.cmu.lti.oaqa.cse.example.ThirdPhaseAnnotatorA1
+foo: bar
+cross-opts:
+  parameter-a: [value1,value2]
+  parameter-b: [value4]
+  parameter-c: [value6]
+  parameter-d: [value7,value8]

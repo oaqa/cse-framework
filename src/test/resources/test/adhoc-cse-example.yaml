@@ -1,0 +1,22 @@
+experiment:
+  name: adhoc-experiment
+  author: junit
+
+persistence-provider:
+  inherit: db.default-persistence-provider
+
+collection-reader:
+  inherit: adhoc.adhoc-collection-reader
+  
+pipeline:
+  - inherit: ecd.phase 
+    name: first-phase
+    options: |
+      - class: edu.cmu.lti.oaqa.cse.example.FirstPhaseAnnotatorB1  
+      
+  - inherit: ecd.phase 
+    name: second-phase  
+    options: |
+      - class: edu.cmu.lti.oaqa.cse.example.SecondPhaseAnnotatorB1
+
+      

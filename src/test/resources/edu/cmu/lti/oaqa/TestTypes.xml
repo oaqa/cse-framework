@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <name>OAQATypes</name>
+  <description>Type system descriptor for the OAQA data model.
+
+$Id:$</description>
+  <version>0.1</version>
+  <vendor>OAQA</vendor>
+  <types>
+    <typeDescription>
+      <name>org.oaqa.model.test.OAQATop</name>
+      <description>The base class for OAQA feature structures that are not Annotations.</description>
+      <supertypeName>uima.cas.TOP</supertypeName>
+      <features>
+        <featureDescription>
+          <name>componentId</name>
+          <description>The unique id of the component that created this instance.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>probability</name>
+          <description>The annotator's estimate of the probability associated with this annotation.</description>
+          <rangeTypeName>uima.cas.Float</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.test.Search</name>
+      <description>An object that holds a query and results for a search (text search, fact search, KB search, etc.)</description>
+      <supertypeName>org.oaqa.model.test.OAQATop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>query</name>
+          <description>The query in the native syntax of the corresponding search engine.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>hitList</name>
+          <description>Hit list of search results, sorted in descreasing order of relevance score.</description>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>org.oaqa.model.test.SearchResult</elementType>
+        </featureDescription>
+        <featureDescription>
+          <name>abstractQuery</name>
+          <description>The abstract query from which this actual query was generated.</description>
+          <rangeTypeName>org.oaqa.model.test.AbstractQuery</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>searchId</name>
+          <description>An identifier for this search result.  Used to collect hit-list objects that belong to this search result after they've been split out for parallel processing then gathered up again.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.test.SearchResult</name>
+      <description>A search result.</description>
+      <supertypeName>org.oaqa.model.test.OAQATop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>uri</name>
+          <description>An identifier for the source of this search result, e.g., the name of the file that this result is drawn from, which, when combined with offset and length, uniquely identifies the span of text for this result.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>score</name>
+          <description>Relevance score associated with the search result.</description>
+          <rangeTypeName>uima.cas.Double</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>text</name>
+          <description>The text associated with the hit.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>rank</name>
+          <description>Rank of this result in the original hit-list.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>queryString</name>
+          <description>The query string associated with the hit.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>searchId</name>
+          <description>ID of the search object to which this search result belongs (matches the searchId field in the Search object).</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>featureVector</name>
+          <description>Passage Level scores</description>
+          <rangeTypeName>uima.cas.DoubleArray</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>rankVector</name>
+          <description>Passage level ranks</description>
+          <rangeTypeName>uima.cas.IntegerArray</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.test.Passage</name>
+      <description>A passage search result.</description>
+      <supertypeName>org.oaqa.model.test.SearchResult</supertypeName>
+      <features>
+        <featureDescription>
+          <name>title</name>
+          <description>The title of the document that contains this passage.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>docId</name>
+          <description>A unique identifier for the document that conatins this passage.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>begin</name>
+          <description>Character offset of the start of this passage within the document that contains this passage.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>end</name>
+          <description>Character offset of the end of this passage within the document that contains this passage.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>aspects</name>
+          <description>Aspects of the gold standard passage.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>org.oaqa.model.test.AbstractQuery</name>
+      <description>An abstract search query for the question that represents query concepts and query operators over those concepts.</description>
+      <supertypeName>org.oaqa.model.test.OAQATop</supertypeName>
+      <features>
+        <featureDescription>
+          <name>concepts</name>
+          <description>The list of query concepts that make up this abstract query.  The list is ordered.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>org.oaqa.model.test.QueryConcept</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>
