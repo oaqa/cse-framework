@@ -1,0 +1,2 @@
+class: edu.cmu.lti.oaqa.ecd.eval.TraceConsumer
+name: funnel-consumer

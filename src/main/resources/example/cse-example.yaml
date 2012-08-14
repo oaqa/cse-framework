@@ -91,7 +91,7 @@ stages:
       
       - inherit: eval.trace-consumer
         listeners: |
-          - inherit: eval.example-trace-listener
+          - inherit: test.eval.example-consumer
 
     post-process: 
       - inherit: eval.retrieval-measures-evaluator

@@ -33,8 +33,8 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Table;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
-import edu.cmu.lti.oaqa.ecd.eval.ExperimentKey;
 import edu.cmu.lti.oaqa.ecd.phase.ProcessingStepUtils;
+import edu.cmu.lti.oaqa.framework.eval.ExperimentKey;
 import edu.cmu.lti.oaqa.framework.types.ExperimentUUID;
 
 public class CsvReportGeneratorConsumer extends CasConsumer_ImplBase implements ReportGenerator {

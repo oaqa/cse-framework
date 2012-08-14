@@ -1,4 +1,4 @@
 class: edu.cmu.lti.oaqa.ecd.eval.TraceConsumer
 name: retrieval-measures-evaluator 
 experiment-listeners: |
-  - inherit: eval.cse-retrieval-evaluator
+  - inherit: eval.retrieval-evaluator
