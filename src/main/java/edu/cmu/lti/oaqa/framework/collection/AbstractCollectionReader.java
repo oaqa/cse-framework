@@ -62,7 +62,7 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
       throw new ResourceInitializationException(new IllegalArgumentException(
              String.format("%s must be provided with a parameter of type <persistence-provider>", getClass().getSimpleName())));
     }
-    this.persistence = BaseExperimentBuilder.loadPersistenceProvider(pp,
+    this.persistence = BaseExperimentBuilder.loadProvider(pp,
             ExperimentPersistenceProvider.class);
   }
 

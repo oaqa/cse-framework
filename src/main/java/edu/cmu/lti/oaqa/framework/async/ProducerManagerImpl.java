@@ -28,7 +28,7 @@ import javax.jms.TextMessage;
 
 import com.google.common.collect.Sets;
 
-import edu.cmu.lti.oaqa.cse.driver.CSEFrameworkConfiguration;
+import edu.cmu.lti.oaqa.cse.driver.AsyncConfiguration;
 import edu.cmu.lti.oaqa.framework.async.activemq.ActiveMQQueueConsumer;
 import edu.cmu.lti.oaqa.framework.async.activemq.ActiveMQTopicPublisher;
 import edu.cmu.lti.oaqa.framework.async.activemq.ActiveMQTopicSubscriber;
@@ -49,7 +49,7 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
 
   int count;
 
-  public ProducerManagerImpl(String experimentUuid, CSEFrameworkConfiguration config) throws JMSException {
+  public ProducerManagerImpl(String experimentUuid, AsyncConfiguration config) throws JMSException {
     this.experimentUuid = experimentUuid;
     String url = config.getBrokerUrl();
     this.consumer = new ActiveMQQueueConsumer(url, experimentUuid

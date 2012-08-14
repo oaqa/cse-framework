@@ -24,7 +24,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import edu.cmu.lti.oaqa.cse.driver.CSEFrameworkConfiguration;
+import edu.cmu.lti.oaqa.cse.driver.AsyncConfiguration;
 import edu.cmu.lti.oaqa.framework.async.activemq.ActiveMQTopicPublisher;
 import edu.cmu.lti.oaqa.framework.async.activemq.ActiveMQTopicSubscriber;
 
@@ -38,7 +38,7 @@ public class ConsumerManagerImpl implements ConsumerManager, MessageListener {
 
   private CountDownLatch latch;
   
-  public ConsumerManagerImpl(String uuid, CSEFrameworkConfiguration config) throws JMSException {
+  public ConsumerManagerImpl(String uuid, AsyncConfiguration config) throws JMSException {
     this.uuid = uuid;
     this.closeListener = new ActiveMQTopicSubscriber(config.getBrokerUrl(), this, Topics.DB_CONFIG_READY);
     this.publisher = new ActiveMQTopicPublisher(config.getBrokerUrl(), Topics.values());

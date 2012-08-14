@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.cse.driver;
+package edu.cmu.lti.oaqa.framework;
 
 import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.Type;

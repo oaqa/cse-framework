@@ -43,7 +43,7 @@ public class RetrievalMeasuresEvaluator extends Resource_ImplBase implements Exp
       throw new ResourceInitializationException(new IllegalArgumentException(
               "Must provide a parameter of type <persistence-provider>"));
     }
-    this.persistence = BaseExperimentBuilder.loadPersistenceProvider(pp,
+    this.persistence = BaseExperimentBuilder.loadProvider(pp,
             RetrievalEvalPersistenceProvider.class);
     return true;
   }

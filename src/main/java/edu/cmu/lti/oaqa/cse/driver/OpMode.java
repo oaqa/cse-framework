@@ -17,15 +17,5 @@
 package edu.cmu.lti.oaqa.cse.driver;
 
 enum OpMode {
-  LOCAL(""), PRODUCER("Producer"), CONSUMER("Consumer");
-
-  private String label;
-
-  private OpMode(String label) {
-    this.label = label;
-  }
-
-  public String getLabel() {
-    return label;
-  }
+  PRODUCER, CONSUMER;
 }

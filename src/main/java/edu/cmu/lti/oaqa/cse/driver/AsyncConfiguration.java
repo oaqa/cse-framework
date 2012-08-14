@@ -22,7 +22,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.resource.Resource_ImplBase;
 
-public class CSEFrameworkConfiguration extends Resource_ImplBase {
+public class AsyncConfiguration extends Resource_ImplBase {
 
   private String brokerUrl;
 
