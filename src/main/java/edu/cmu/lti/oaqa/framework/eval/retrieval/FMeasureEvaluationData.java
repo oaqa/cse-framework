@@ -18,16 +18,17 @@ package edu.cmu.lti.oaqa.framework.eval.retrieval;
 
 public final class FMeasureEvaluationData {
 
-  final float precision;
-  final float recall;
+  private final float precision;
+  
+  private final float recall;
 
-  final float f1;
+  private final float f1;
 
-  final float map;
+  private final float map;
 
-  final float binaryRecall;
+  private final float binaryRecall;
 
-  final int count;
+  private final int count;
 
   FMeasureEvaluationData(float precision, float recall, float f1, float docMAP, float binaryRecall,
           int count) {

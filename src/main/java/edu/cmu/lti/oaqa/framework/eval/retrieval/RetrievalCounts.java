@@ -17,17 +17,17 @@
 package edu.cmu.lti.oaqa.framework.eval.retrieval;
 
 public final class RetrievalCounts {
-	int relevantRetrieved;
+	private int relevantRetrieved;
 
-  int retrieved;
+	private int retrieved;
 
-  int relevant;
+	private int relevant;
   
-  float avep;
+	private float avep;
 
-  int binaryRelevant;
+	private int binaryRelevant;
 	
-	int count;
+	private int count;
 	
 	public RetrievalCounts() {
 		this(0, 0, 0, 0, 0, 0);
