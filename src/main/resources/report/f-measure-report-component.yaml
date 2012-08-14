@@ -1,9 +1,0 @@
-class: edu.cmu.lti.oaqa.framework.report.TabularReportComponentBuilder
-keys: evaluator,traceId
-headers: Evaluator,Configuration,Precision,Recall,F-1,MAP,Binary Recall,Count
-fields: evaluator,traceId,prec,recall,f1,map,binary_recall,count
-formats: "%s,%s,%.4f,%.4f,%.4f,%.4f,%.4f,%d"
-query: |
-  SELECT evaluator,traceId,prec,recall,f1,map,binary_recall,count FROM fmeasure_eval 
-  WHERE experimentId = ? AND stage = ?
-  

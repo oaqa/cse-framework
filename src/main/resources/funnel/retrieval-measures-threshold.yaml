@@ -1,5 +1,0 @@
-class: edu.cmu.lti.oaqa.framework.eval.funnel.QueryBasedFunnel
-query: |
-  SELECT traceId
-  FROM fmeasure_eval 
-  WHERE experimentId = :experimentUuid AND map <= :threshold

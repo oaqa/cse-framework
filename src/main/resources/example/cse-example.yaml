@@ -54,14 +54,14 @@ collection-reader:
 stages:
   - stage:
     pipeline:
-      - inherit: cse.phase 
+      - inherit: ecd.phase 
         name: first-phase
         options: |
           - inherit: example.first-phase-annotator-a
           - class: edu.cmu.lti.oaqa.cse.example.FirstPhaseAnnotatorB1 
           - pipeline: [class: edu.cmu.lti.oaqa.cse.example.FirstPhaseAnnotatorB1, inherit: example.first-phase-annotator-a]  
       
-      - inherit: cse.phase 
+      - inherit: ecd.phase 
         name: second-phase  
         options: |
           - class: edu.cmu.lti.oaqa.cse.example.SecondPhaseAnnotatorA1
@@ -82,7 +82,7 @@ stages:
     
   - stage:
     pipeline:
-      - inherit: cse.phase  
+      - inherit: ecd.phase  
         name: third-phase  
         options: |
           - inherit: example.third-phase-annotator
