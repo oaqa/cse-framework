@@ -1,47 +1,9 @@
-# Experiment Configuration Descriptor
-
-# The following sections are required: 
-# experiment, collection-reader, pipeline and post-process
-
-# Each resource should be specified either as:
-#  inherit or class:
-
-# -inherit- will look for a file WITHIN the classpath 
-# on the directory specified by the doted syntax 
-#  a.b.c => a/b/c 
-# inherited properties can be overridden directly 
-# on the body of the declaration
-
-# -class- will look for a class on the classpath, and is 
-# intended as a shortcut for classes that might not have 
-# default configuration parameters
-
-# When the attributes are specified as a resource
-# to be loaded on an annotator, they should be specified 
-# as [class|inherit]!fully.qualified.resource
-
-# A pipeline is typically defined by phases that inherit
-# from base.phase, this element provides all the book keeping 
-# functionality for experimentation.
-# Elements that need to collect information form the different
-# experiment options can be specified at the end of the pipeline.
-
-# Besides these elements, any AnalysisEngine or CasConsumer 
-# can be added to the pipeline in a similar way. 
-
-# Some options within a phase can have combinatorial options
-# for a detailed example see: example.third-phase-annotator
-
-# A final note on YAML syntax, indentation is relevant to
-# determine nesting of elements and some characters 
-# are reserved (-,:) so use quotes "" to use them on strings
-
-experiment:
+configuration:
   name: example-experiment
   author: elmerg
 
-configuration:
-  inherit: db.local-cse-config
+persistence-provider:
+  inherit: db.default-persistence-provider
 
 collection-reader:
   inherit: db.local-collection-reader

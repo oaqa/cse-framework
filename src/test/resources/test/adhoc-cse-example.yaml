@@ -1,4 +1,4 @@
-experiment:
+configuration:
   name: adhoc-experiment
   author: junit
 
