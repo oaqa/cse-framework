@@ -16,8 +16,6 @@ import edu.cmu.lti.oaqa.framework.report.ReportComponentBuilder;
 
 public class DefaultReportComponentBuilder extends Resource_ImplBase implements ReportComponentBuilder {
 
-  private String query;
-  private String[] keys;
   private String[] fields;
   private String[] headers;
   private String[] formats;
@@ -25,8 +23,6 @@ public class DefaultReportComponentBuilder extends Resource_ImplBase implements 
   @Override
   public boolean initialize(ResourceSpecifier aSpecifier,
           Map<String,Object> aAdditionalParams) throws ResourceInitializationException {
-    this.query = ((String) aAdditionalParams.get("query"));
-    this.keys = ((String) aAdditionalParams.get("keys")).split(",");
     this.fields = ((String) aAdditionalParams.get("fields")).split(",");
     this.formats = ((String) aAdditionalParams.get("formats")).split(",");
     this.headers = ((String) aAdditionalParams.get("headers")).split(",");
