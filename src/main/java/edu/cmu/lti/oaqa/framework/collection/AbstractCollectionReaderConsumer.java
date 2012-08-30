@@ -111,15 +111,14 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
     try {
       nextInput++;
       JCas jcas = aCAS.getJCas();
-      jcas.setDocumentText(nextElement.getQuestion());
+      jcas.setDocumentText(nextElement.getText());
       ExperimentUUID expUuid = new ExperimentUUID(jcas);
       expUuid.setUuid(experimentUuid);
       expUuid.setStageId(stageId);
       expUuid.addToIndexes();
       InputElement next = new InputElement(jcas);
       next.setDataset(nextElement.getDataset());
-      next.setQuestion(nextElement.getQuestion());
-      next.setAnswerPattern(nextElement.getAnswerPattern());
+      next.setQuestion(nextElement.getText());
       next.setSequenceId(nextElement.getSequenceId());
       next.addToIndexes();
       decorate(jcas);

@@ -17,27 +17,20 @@
 package edu.cmu.lti.oaqa.framework;
 
 public class DataElement {
-  private final int id;
 
   private final String dataset;
 
   private final int sequenceId;
 
-  private final String question, answerPattern;
+  private final String text;
   
   private final String quuid;
 
-  public DataElement(int id, String dataset, int sequenceId, String question, String answerPattern, String quuid) {
-    this.id = id;
+  public DataElement(String dataset, int sequenceId, String question, String quuid) {
     this.dataset = dataset;
     this.sequenceId = sequenceId;
-    this.question = question;
-    this.answerPattern = answerPattern;
+    this.text = question;
     this.quuid = quuid;
-  }
-
-  public int getId() {
-    return id;
   }
 
   public String getDataset() {
@@ -48,17 +41,12 @@ public class DataElement {
     return sequenceId;
   }
 
-  public String getQuestion() {
-    return question;
-  }
-
-  public String getAnswerPattern() {
-    return answerPattern;
+  public String getText() {
+    return text;
   }
 
   public String toString() {
-    return "Dataset: " + dataset + " SequenceId: " + sequenceId + " Question: " + question
-            + " AnswerPattern: " + answerPattern;
+    return "Dataset: " + dataset + " SequenceId: " + sequenceId + " Text: " + text;
   }
 
   public String getQuuid() {

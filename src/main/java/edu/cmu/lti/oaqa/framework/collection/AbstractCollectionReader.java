@@ -86,15 +86,14 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
       DataElement nextElement = getNextElement();
       count++;
       JCas jcas = aCAS.getJCas();
-      jcas.setDocumentText(nextElement.getQuestion());
+      jcas.setDocumentText(nextElement.getText());
       ExperimentUUID expUuid = new ExperimentUUID(jcas);
       expUuid.setUuid(getUUID());
       expUuid.setStageId(getStageId());
       expUuid.addToIndexes();
       InputElement next = new InputElement(jcas);
       next.setDataset(dataset);
-      next.setQuestion(nextElement.getQuestion());
-      next.setAnswerPattern(nextElement.getAnswerPattern());
+      next.setQuestion(nextElement.getText());
       next.setSequenceId(nextElement.getSequenceId());
       next.setQuuid(nextElement.getQuuid());
       next.addToIndexes();
