@@ -69,5 +69,10 @@
 			<artifactId>uima-ecd</artifactId>
 			<version>2.1.1-SNAPSHOT</version>
 		</dependency>
+    <dependency>
+      <groupId>mx.bigdata.streaming</groupId>
+      <artifactId>streaming</artifactId>
+      <version>1.0.0</version>
+    </dependency>
 	</dependencies>
 </project>
