@@ -1,5 +1,4 @@
 class: edu.cmu.lti.oaqa.framework.collection.fs.FileCollectionReader
-file: /input/small.txt
 
 #decorators: |
 #  - inherit: internal.collection.retrieval-gs-decorator
