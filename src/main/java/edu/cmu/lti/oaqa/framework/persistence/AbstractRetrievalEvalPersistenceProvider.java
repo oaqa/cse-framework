@@ -16,10 +16,9 @@
 
 package edu.cmu.lti.oaqa.framework.persistence;
 
-import org.apache.uima.resource.Resource_ImplBase;
-
+import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 import edu.cmu.lti.oaqa.framework.eval.retrieval.RetrievalEvalPersistenceProvider;
 
-public abstract class AbstractRetrievalEvalPersistenceProvider extends Resource_ImplBase implements RetrievalEvalPersistenceProvider {
+public abstract class AbstractRetrievalEvalPersistenceProvider extends ConfigurableProvider implements RetrievalEvalPersistenceProvider {
 
 }
