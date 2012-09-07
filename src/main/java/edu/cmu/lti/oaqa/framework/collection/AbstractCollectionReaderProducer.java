@@ -74,7 +74,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
   
   protected abstract int getStageId();
   
-  protected abstract DataElement getNextFromSource();
+  protected abstract DataElement getNextFromSource() throws Exception;
   
   protected abstract String getUUID();
   

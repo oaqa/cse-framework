@@ -53,9 +53,18 @@ public final class AsyncDriver {
 
   private final AsyncConfiguration asyncConfig;
 
+  private final AnyObject localConfig;
+
   public AsyncDriver(String resource, String uuid, OpMode op) throws Exception {
-    this.config = ConfigurationLoader.load(resource);
     this.opMode = op;
+    this.localConfig = ConfigurationLoader.load(resource);
+    if (opMode == OpMode.PRODUCER) {
+      resource += "-producer";
+      this.config = ConfigurationLoader.load(resource);
+    } else {
+      resource += "-consumer";
+      this.config = ConfigurationLoader.load(resource);
+    }
     TypeSystemDescription typeSystem = TypeSystemDescriptionFactory.createTypeSystemDescription();
     this.builder = new BaseExperimentBuilder(uuid, resource, typeSystem);
     this.asyncConfig = builder.initializeResource(config, "async-configuration", AsyncConfiguration.class);
@@ -93,7 +102,7 @@ public final class AsyncDriver {
         managers.notifyCloseCollectionReaders();
         managers.waitForProcessCompletion();
         // TODO: This is bogus USE a local reader for evaluation and funneling!!!
-        CollectionReader postReader = builder.buildCollectionReader(conf, stage.getId());
+        CollectionReader postReader = builder.buildCollectionReader(localConfig, stage.getId());
         AnalysisEngine post = builder.buildPipeline(stage.getConfiguration(), "post-process",
                 stage.getId());
         SimplePipelineRev803.runPipeline(postReader, post);
