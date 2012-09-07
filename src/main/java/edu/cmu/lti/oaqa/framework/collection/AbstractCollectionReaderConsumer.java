@@ -143,7 +143,6 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
         throw new IllegalStateException(String.format("Received stage id %s expected %s ", stageId, this.stageId));
       }
       nextElement = getDataElement(map);
-      msg.acknowledge();
       return true;
     } catch (Exception e) {
       Throwables.propagateIfInstanceOf(e, CollectionException.class);

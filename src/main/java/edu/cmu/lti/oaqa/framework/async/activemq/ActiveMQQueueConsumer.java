@@ -42,7 +42,7 @@ public class ActiveMQQueueConsumer implements Closeable {
     ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
     this.connection = connectionFactory.createConnection();
     connection.start();
-    Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     Destination destination = session.createQueue(queue);
     this.consumer = session.createConsumer(destination);
   }
