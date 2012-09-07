@@ -84,7 +84,6 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
   public void getNext(CAS aCAS) throws IOException, CollectionException {
     try {
       DataElement nextElement = getNextElement();
-      count++;
       JCas jcas = aCAS.getJCas();
       jcas.setDocumentText(nextElement.getText());
       ExperimentUUID expUuid = new ExperimentUUID(jcas);
@@ -98,6 +97,7 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
       next.setQuuid(nextElement.getQuuid());
       next.addToIndexes();
       decorate(jcas);
+      count++;
       persistence.updateExperimentMeta(getUUID(), count);
     } catch (Exception e) {
       throw new CollectionException(e);
