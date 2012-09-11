@@ -101,7 +101,6 @@ public final class AsyncDriver {
         manager.waitForReaderCompletion(total);
         manager.notifyCloseCollectionReaders();
         manager.waitForProcessCompletion();
-        // TODO: This is bogus USE a local reader for evaluation and funneling!!!
         CollectionReader postReader = builder.buildCollectionReader(localConfig, stage.getId());
         AnalysisEngine post = builder.buildPipeline(stage.getConfiguration(), "post-process",
                 stage.getId());
