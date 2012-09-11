@@ -89,7 +89,7 @@ public final class AsyncDriver {
 
   private void runProducer() throws Exception {
     StagedConfiguration stagedConfig = new StagedConfigurationImpl(config);
-    ProducerManager managers = new ProducerManagerImpl(builder.getExperimentUuid(), asyncConfig);
+    ProducerManager manager = new ProducerManagerImpl(builder.getExperimentUuid(), asyncConfig);
     try {
       for (Stage stage : stagedConfig) {
         AnyObject conf = stage.getConfiguration();
@@ -98,18 +98,18 @@ public final class AsyncDriver {
         SimplePipelineRev803.runPipeline(reader, noOp);
         Progress progress = reader.getProgress()[0];
         long total = progress.getCompleted();
-        managers.waitForReaderCompletion(total);
-        managers.notifyCloseCollectionReaders();
-        managers.waitForProcessCompletion();
+        manager.waitForReaderCompletion(total);
+        manager.notifyCloseCollectionReaders();
+        manager.waitForProcessCompletion();
         // TODO: This is bogus USE a local reader for evaluation and funneling!!!
         CollectionReader postReader = builder.buildCollectionReader(localConfig, stage.getId());
         AnalysisEngine post = builder.buildPipeline(stage.getConfiguration(), "post-process",
                 stage.getId());
         SimplePipelineRev803.runPipeline(postReader, post);
-        managers.notifyNextConfigurationIsReady();
+        manager.notifyNextConfigurationIsReady();
       }
     } finally {
-      managers.close();
+      manager.close();
     }
   }
 

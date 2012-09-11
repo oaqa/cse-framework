@@ -34,6 +34,8 @@ public class ActiveMQQueueConsumer implements Closeable {
   private Connection connection;
 
   private MessageConsumer consumer;
+  
+  private Session session;
 
   public ActiveMQQueueConsumer(String url, String queue) throws JMSException {
     String user = ActiveMQConnection.DEFAULT_USER;
@@ -42,13 +44,25 @@ public class ActiveMQQueueConsumer implements Closeable {
     ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
     this.connection = connectionFactory.createConnection();
     connection.start();
-    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    this.session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
     Destination destination = session.createQueue(queue);
     this.consumer = session.createConsumer(destination);
   }
 
   public Message receive() throws JMSException {
     return consumer.receive();
+  }
+
+  public Message receive(long timeout) throws JMSException {
+    return consumer.receive(timeout);
+  }
+  
+  public void recover() {
+    try {
+      session.recover();
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
   }
   
   @Override

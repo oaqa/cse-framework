@@ -66,13 +66,27 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
 
   @Override
   public void waitForReaderCompletion(long total) throws JMSException {
-    int control = 0;
+    int count = 0;
     consumers.clear();
-    while (control < total) {
-      MapMessage msg = (MapMessage) consumer.receive();
+    long timeout = Long.MAX_VALUE;
+    long control = System.currentTimeMillis();
+    long window = 0;
+    while (count < total) {
+      System.out.println("Timeout:" + timeout / 1000);
+      MapMessage msg = (MapMessage) consumer.receive(timeout);
+      if (msg == null) {
+        // TODO: Should wait for the messages form each queue, register which processor is working on each topic!
+        System.err.printf("Timed out waiting for completion processed %s of %s (timeout @ %s ms)\n", count, total, timeout);
+        break;
+      }
+      long received = System.currentTimeMillis();
       String consumerUuid = msg.getString("consumerUuid");
       consumers.add(consumerUuid);
-      control++;
+      count++;
+      window += (received - control);
+      float average = window / (float) count;
+      timeout = (long) Math.max(average * 10, 10 * 60 * 1000L);
+      control = received;
     }
   }
 
