@@ -30,6 +30,8 @@ import org.apache.uima.util.ProgressImpl;
 
 import com.google.common.io.Closeables;
 
+import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
+import edu.cmu.lti.oaqa.ecd.ExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.framework.DataElement;
 import edu.cmu.lti.oaqa.framework.async.activemq.ActiveMQQueueProducer;
 
@@ -37,16 +39,25 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
 
   public static final String COLLECTION_READER_QUEUE_SUFFIX = "-producer";
 
-  private int nextInput = 0;
+  private int count = 0;
 
   private ActiveMQQueueProducer producer;
+  
+  private ExperimentPersistenceProvider persistence;
 
   @Override
   public void initialize() throws ResourceInitializationException {
     super.initialize();
     String url = (String) getConfigParameterValue("broker-url");
     // String user = (String) getConfigParameterValue("amq-username");
-    // String password = (String) getConfigParameterValue("amq-password");    
+    // String password = (String) getConfigParameterValue("amq-password");
+    String pp = (String) getConfigParameterValue("persistence-provider");
+    if (pp == null) {
+      throw new ResourceInitializationException(new IllegalArgumentException(
+             String.format("%s must be provided with a parameter of type <persistence-provider>", getClass().getSimpleName())));
+    }
+    this.persistence = BaseExperimentBuilder.loadProvider(pp,
+            ExperimentPersistenceProvider.class);
     try {
       this.producer = new ActiveMQQueueProducer(url, getUUID()
               + COLLECTION_READER_QUEUE_SUFFIX);
@@ -64,7 +75,8 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
       message.setInt("sequenceId", nextElement.getSequenceId());
       message.setInt("stageId", getStageId());
       producer.send(message);
-      nextInput++;
+      count++;
+      persistence.updateExperimentMeta(getUUID(), count);
     } catch (Exception e) {
       throw new CollectionException(e);
     }
@@ -80,7 +92,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
   
   @Override
   public Progress[] getProgress() {
-    return new Progress[] { new ProgressImpl(nextInput, -1, Progress.ENTITIES) };
+    return new Progress[] { new ProgressImpl(count, -1, Progress.ENTITIES) };
   }
 
   @Override

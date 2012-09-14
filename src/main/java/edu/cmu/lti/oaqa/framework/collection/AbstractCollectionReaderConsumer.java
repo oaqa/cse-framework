@@ -54,7 +54,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
   int nextInput;
 
   private String consumerUuid;
-  
+
   private String experimentUuid;
 
   private DataElement nextElement;
@@ -68,7 +68,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
   private ActiveMQTopicSubscriber closeListener;
 
   private boolean processing = true;
-  
+
   private int stageId;
 
   @Override
@@ -134,19 +134,25 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
     }
     try {
       Message msg = consumer.receive();
-      MapMessage map = (MapMessage) msg;
-      if (map == null) {
-        throw new IllegalStateException("Received message is null");
+      try {
+        MapMessage map = (MapMessage) msg;
+        if (map == null) {
+          throw new IllegalStateException("Received message is null");
+        }
+        int stageId = map.getInt("stageId");
+        if (this.stageId != stageId) {
+          throw new IllegalStateException(String.format("Received stage id %s expected %s ",
+                  stageId, this.stageId));
+        }
+        nextElement = getDataElement(map);
+        msg.acknowledge();
+        return true;
+      } catch (Exception e) {
+        consumer.recover();
+        Throwables.propagateIfInstanceOf(e, CollectionException.class);
+        throw new CollectionException(e);
       }
-      int stageId = map.getInt("stageId");
-      if (this.stageId != stageId) {
-        throw new IllegalStateException(String.format("Received stage id %s expected %s ", stageId, this.stageId));
-      }
-      nextElement = getDataElement(map);
-      msg.acknowledge();
-      return true;
-    } catch (Exception e) {
-      Throwables.propagateIfInstanceOf(e, CollectionException.class);
+    } catch (JMSException e) {
       throw new CollectionException(e);
     }
   }
@@ -185,7 +191,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
       // TODO: Synchronize lock?
       if (message.getText().equals(experimentUuid)) {
         processing = false;
-        Closeables.closeQuietly(consumer); 
+        Closeables.closeQuietly(consumer);
       }
     } catch (Exception e) {
       System.err.println("Unable to process message: " + message);
@@ -195,8 +201,8 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
   @Override
   public void close() throws IOException {
     System.out.printf("(%s) Closing connections!!\n", stageId);
-    Closeables.closeQuietly(consumer);    
-    Closeables.closeQuietly(producer);    
+    Closeables.closeQuietly(consumer);
+    Closeables.closeQuietly(producer);
     Closeables.closeQuietly(closeListener);
   }
 
