@@ -17,7 +17,6 @@
 package edu.cmu.lti.oaqa.framework.async;
 
 import java.io.Closeable;
-import java.util.Set;
 
 import javax.jms.JMSException;
 
