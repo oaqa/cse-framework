@@ -14,23 +14,16 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.framework.async;
+package edu.cmu.lti.oaqa.framework.persistence;
 
-import java.io.Closeable;
 import java.util.Set;
 
-import javax.jms.JMSException;
+import com.google.common.collect.Sets;
 
-public interface ProducerManager extends Closeable {
-
-  public static final String COMPLETION_QUEUE_SUFFIX = "-completion";
+public class DefaultAsyncConfiguration extends AbstractAsyncConfiguration {
   
-  void notifyCloseCollectionReaders() throws Exception;
-
-  void waitForReaderCompletion() throws JMSException;
-  
-  void notifyNextConfigurationIsReady() throws JMSException;
-
-  void waitForProcessCompletion() throws InterruptedException;
-  
+  @Override
+  public Set<Integer> getPublishedTopics(String experiment) {
+    return Sets.newHashSet();
+  }
 }

@@ -17,6 +17,7 @@
 package edu.cmu.lti.oaqa.framework.collection;
 
 import java.io.IOException;
+import java.util.Set;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -28,6 +29,7 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Progress;
 import org.apache.uima.util.ProgressImpl;
 
+import com.google.common.collect.Sets;
 import com.google.common.io.Closeables;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
@@ -40,6 +42,8 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
   public static final String COLLECTION_READER_QUEUE_SUFFIX = "-producer";
 
   private int count = 0;
+  
+  private Set<Integer> topics = Sets.newHashSet();
 
   private ActiveMQQueueProducer producer;
   
@@ -75,6 +79,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
       message.setInt("sequenceId", nextElement.getSequenceId());
       message.setInt("stageId", getStageId());
       producer.send(message);
+      topics.add(nextElement.getSequenceId());
       count++;
       persistence.updateExperimentMeta(getUUID(), count);
     } catch (Exception e) {
@@ -97,6 +102,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
 
   @Override
   public void close() throws IOException {
+    persistence.updateExperimentMeta(getUUID(), count, topics);
     Closeables.closeQuietly(producer);
   }
 

@@ -16,24 +16,13 @@
 
 package edu.cmu.lti.oaqa.cse.driver;
 
-import java.util.Map;
+import java.util.Set;
 
-import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.resource.ResourceSpecifier;
-import org.apache.uima.resource.Resource_ImplBase;
+import org.apache.uima.resource.Resource;
 
-public class AsyncConfiguration extends Resource_ImplBase {
-
-  private String brokerUrl;
-
-  @Override
-  public boolean initialize(ResourceSpecifier aSpecifier, Map<String, Object> tuples)
-          throws ResourceInitializationException {
-    this.brokerUrl = (String) tuples.get("broker-url");
-    return true;
-  }
-
-  public String getBrokerUrl() {
-    return brokerUrl;
-  }
+public interface AsyncConfiguration extends Resource {
+  
+  public String getBrokerUrl();
+  
+  public Set<Integer> getPublishedTopics(String experiment);
 }
