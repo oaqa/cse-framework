@@ -122,6 +122,8 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
       next.setSequenceId(nextElement.getSequenceId());
       next.addToIndexes();
       decorate(jcas);
+      // TODO: ERROR CRITICAL, THIS NOTIFIES COMPLETION WHEN THE 
+      // MESSAGE HAS BEEN RECEIVED NOT PROCESSED
       notifyProcessed(nextElement.getDataset(), nextElement.getSequenceId());
     } catch (Exception e) {
       throw new CollectionException(e);

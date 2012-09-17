@@ -78,7 +78,7 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
     long control = System.currentTimeMillis();
     long window = 0;
     while (!set.isEmpty()) {
-      System.out.println("Will timeout on:" + timeout / 1000);
+      System.out.println("Expexcted timeout:" + timeout / 1000);
       MapMessage msg = (MapMessage) consumer.receive(timeout);
       if (msg == null) {
         // TODO: Should wait for the messages form each queue, register which processor is working on each topic!
