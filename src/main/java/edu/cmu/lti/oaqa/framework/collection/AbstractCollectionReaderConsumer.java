@@ -147,6 +147,8 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
                   stageId, this.stageId));
         }
         nextElement = getDataElement(map);
+        // TODO: CONCEPTUAL ERROR, THIS ACKNOWLEDGES THAT THE TOPIC HAS BEEN RECEIVED AND DECORATED, 
+        // NOT PROCESSED
         msg.acknowledge();
         return true;
       } catch (Exception e) {
