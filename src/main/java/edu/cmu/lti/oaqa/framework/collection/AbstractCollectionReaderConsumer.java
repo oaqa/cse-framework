@@ -70,6 +70,10 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
   private boolean processing = true;
 
   private int stageId;
+  
+  private int lastSequenceId = -1;
+  
+  private String dataset;
 
   @Override
   public void initialize() throws ResourceInitializationException {
@@ -103,6 +107,13 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
 
   @Override
   public boolean hasNext() throws IOException, CollectionException {
+    if (lastSequenceId != -1) {
+      try {
+        notifyProcessed(dataset, lastSequenceId);
+      } catch (JMSException e) {
+        e.printStackTrace();
+      }
+    }
     return waitForNext();
   }
 
@@ -116,15 +127,15 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
       expUuid.setUuid(experimentUuid);
       expUuid.setStageId(stageId);
       expUuid.addToIndexes();
+      int sequenceId = nextElement.getSequenceId();
       InputElement next = new InputElement(jcas);
       next.setDataset(nextElement.getDataset());
       next.setQuestion(nextElement.getText());
-      next.setSequenceId(nextElement.getSequenceId());
+      next.setSequenceId(sequenceId);
       next.addToIndexes();
       decorate(jcas);
-      // TODO: ERROR CRITICAL, THIS NOTIFIES COMPLETION WHEN THE 
-      // MESSAGE HAS BEEN RECEIVED NOT PROCESSED
-      notifyProcessed(nextElement.getDataset(), nextElement.getSequenceId());
+      this.dataset = nextElement.getDataset();
+      this.lastSequenceId = sequenceId;
     } catch (Exception e) {
       throw new CollectionException(e);
     }
@@ -139,7 +150,8 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
       try {
         MapMessage map = (MapMessage) msg;
         if (map == null) {
-          throw new IllegalStateException("Received message is null");
+          // consumer is already closed
+          return false;
         }
         int stageId = map.getInt("stageId");
         if (this.stageId != stageId) {
