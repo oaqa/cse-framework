@@ -93,7 +93,8 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
       window += (received - control);
       float average = window / (float) count;
       System.out.println("Average execution time for previous topics:" + average / 1000);
-      timeout = (long) Math.max(average * 10, 10 * 60 * 1000L);
+      int timeoutMult = config.getTimeoutMultiplier();
+      timeout = (long) Math.max(average * timeoutMult, 10 * 60 * 1000L);
       control = received;
     }
   }

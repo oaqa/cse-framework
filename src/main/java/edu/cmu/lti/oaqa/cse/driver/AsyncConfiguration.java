@@ -24,5 +24,7 @@ public interface AsyncConfiguration extends Resource {
   
   public String getBrokerUrl();
   
+  public int getTimeoutMultiplier();
+  
   public Set<Integer> getPublishedTopics(String experiment);
 }

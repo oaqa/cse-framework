@@ -25,4 +25,9 @@ public abstract class AbstractAsyncConfiguration extends ConfigurableProvider im
   public String getBrokerUrl() {
     return (String) getParameterValue("broker-url");
   }
+  
+  @Override
+  public int getTimeoutMultiplier() {
+    return (Integer) getParameterValue("timeout-multiplier");
+  }
 }
