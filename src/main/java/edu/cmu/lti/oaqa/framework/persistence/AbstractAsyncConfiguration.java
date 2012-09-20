@@ -14,22 +14,20 @@
  *  limitations under the License.
  */
 
-package edu.cmu.lti.oaqa.framework.async;
+package edu.cmu.lti.oaqa.framework.persistence;
 
-import java.io.Closeable;
+import edu.cmu.lti.oaqa.cse.driver.AsyncConfiguration;
+import edu.cmu.lti.oaqa.ecd.config.ConfigurableProvider;
 
-import javax.jms.JMSException;
+public abstract class AbstractAsyncConfiguration extends ConfigurableProvider implements AsyncConfiguration {
 
-public interface ProducerManager extends Closeable {
-
-  public static final String COMPLETION_QUEUE_SUFFIX = "-completion";
+  @Override
+  public String getBrokerUrl() {
+    return (String) getParameterValue("broker-url");
+  }
   
-  void notifyCloseCollectionReaders() throws Exception;
-
-  void waitForReaderCompletion() throws JMSException;
-  
-  void notifyNextConfigurationIsReady() throws JMSException;
-
-  void waitForProcessCompletion() throws InterruptedException;
-  
+  @Override
+  public int getTimeoutMultiplier() {
+    return (Integer) getParameterValue("timeout-multiplier");
+  }
 }

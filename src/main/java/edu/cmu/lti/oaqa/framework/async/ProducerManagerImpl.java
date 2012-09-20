@@ -42,6 +42,8 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
   private final ActiveMQTopicPublisher publisher;
 
   private final ActiveMQTopicSubscriber completionListener;
+  
+  private final AsyncConfiguration config;
 
   private final Set<String> consumers = Sets.newHashSet();
 
@@ -50,6 +52,7 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
   int count;
 
   public ProducerManagerImpl(String experimentUuid, AsyncConfiguration config) throws JMSException {
+    this.config = config;
     this.experimentUuid = experimentUuid;
     String url = config.getBrokerUrl();
     this.consumer = new ActiveMQQueueConsumer(url, experimentUuid
@@ -65,27 +68,33 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
   }
 
   @Override
-  public void waitForReaderCompletion(long total) throws JMSException {
+  public void waitForReaderCompletion() throws JMSException {
+    Set<Integer> topics = config.getPublishedTopics(experimentUuid);
+    int total = topics.size();
+    Set<Integer> set = Sets.newHashSet(topics);
     int count = 0;
     consumers.clear();
     long timeout = Long.MAX_VALUE;
     long control = System.currentTimeMillis();
     long window = 0;
-    while (count < total) {
-      System.out.println("Timeout:" + timeout / 1000);
+    while (!set.isEmpty()) {
+      System.out.println("Expexcted timeout:" + timeout / 1000);
       MapMessage msg = (MapMessage) consumer.receive(timeout);
       if (msg == null) {
         // TODO: Should wait for the messages form each queue, register which processor is working on each topic!
         System.err.printf("Timed out waiting for completion processed %s of %s (timeout @ %s ms)\n", count, total, timeout);
         break;
       }
+      set.remove(msg.getInt("sequenceId"));
       long received = System.currentTimeMillis();
       String consumerUuid = msg.getString("consumerUuid");
       consumers.add(consumerUuid);
       count++;
       window += (received - control);
       float average = window / (float) count;
-      timeout = (long) Math.max(average * 10, 10 * 60 * 1000L);
+      System.out.println("Average execution time for previous topics:" + average / 1000);
+      int timeoutMult = config.getTimeoutMultiplier();
+      timeout = (long) Math.max(average * timeoutMult, 10 * 60 * 1000L);
       control = received;
     }
   }

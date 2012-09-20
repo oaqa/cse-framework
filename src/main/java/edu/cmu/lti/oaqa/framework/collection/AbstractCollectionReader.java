@@ -17,6 +17,7 @@
 package edu.cmu.lti.oaqa.framework.collection;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
@@ -28,6 +29,8 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.Progress;
 import org.apache.uima.util.ProgressImpl;
 
+import com.google.common.collect.Sets;
+
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
 import edu.cmu.lti.oaqa.ecd.ExperimentPersistenceProvider;
 import edu.cmu.lti.oaqa.framework.DataElement;
@@ -37,6 +40,8 @@ import edu.cmu.lti.oaqa.framework.types.InputElement;
 public abstract class AbstractCollectionReader extends CollectionReader_ImplBase {
 
   private String dataset;
+  
+  private Set<Integer> topics = Sets.newHashSet();
 
   private int count = 0;
 
@@ -97,8 +102,9 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
       next.setQuuid(nextElement.getQuuid());
       next.addToIndexes();
       decorate(jcas);
+      topics.add(nextElement.getSequenceId());
       count++;
-      persistence.updateExperimentMeta(getUUID(), count);
+      //persistence.updateExperimentMeta(getUUID(), count);
     } catch (Exception e) {
       throw new CollectionException(e);
     }
@@ -115,6 +121,11 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
   @Override
   public Progress[] getProgress() {
     return new Progress[] { new ProgressImpl(count, -1, Progress.ENTITIES) };
+  }
+  
+  @Override
+  public void close() throws IOException {
+    persistence.updateExperimentMeta(getUUID(), count, topics);
   }
 
 }

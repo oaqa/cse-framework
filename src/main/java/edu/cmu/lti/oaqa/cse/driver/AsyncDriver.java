@@ -25,7 +25,6 @@ import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.collection.CollectionReader;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
-import org.apache.uima.util.Progress;
 import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import edu.cmu.lti.oaqa.ecd.BaseExperimentBuilder;
@@ -96,9 +95,9 @@ public final class AsyncDriver {
         CollectionReader reader = builder.buildCollectionReader(conf, stage.getId());
         AnalysisEngine noOp = builder.createNoOpEngine();
         SimplePipelineRev803.runPipeline(reader, noOp);
-        Progress progress = reader.getProgress()[0];
-        long total = progress.getCompleted();
-        manager.waitForReaderCompletion(total);
+        //Progress progress = reader.getProgress()[0];
+        //long total = progress.getCompleted();
+        manager.waitForReaderCompletion();
         manager.notifyCloseCollectionReaders();
         manager.waitForProcessCompletion();
         CollectionReader postReader = builder.buildCollectionReader(localConfig, stage.getId());

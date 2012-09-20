@@ -1,0 +1,31 @@
+configuration: 
+  name: helloqa
+  author: oaqa
+  
+persistence-provider:
+  inherit: helloqa.db.local-persistence-provider
+
+collection-reader:
+  inherit: fs.fs-collection-reader
+  dataset: GUTENBERG
+  file: /input/small.txt
+  
+pipeline:
+  - inherit: ecd.phase  
+    name: keyterm-extractor
+    options: |
+      - inherit: helloqa.keyterm.simple
+  
+  - inherit: ecd.phase 
+    name: retrieval-strategist
+    options: |
+      - inherit: helloqa.retrieval.simple-solr-strategist
+
+  - inherit: jdbc.eval.retrieval-aggregator-consumer
+
+post-process: 
+  - inherit: jdbc.eval.retrieval-evaluator-consumer
+  - inherit: report.csv-report-generator
+    builders: |
+      - inherit: report.default-f-measure-report-component
+  
