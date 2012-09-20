@@ -36,7 +36,7 @@ public abstract class IterableCollectionReader extends AbstractCollectionReader 
 
   protected abstract Iterator<DataElement> getInputSet() throws ResourceInitializationException;
 
-  protected DataElement getNextElement() throws Exception {
+  public DataElement getNextElement() throws Exception {
     return inputs.next();
   }
 

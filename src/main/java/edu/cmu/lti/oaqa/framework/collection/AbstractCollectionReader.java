@@ -68,15 +68,15 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
 
   protected abstract DataElement getNextElement() throws Exception;
 
-  protected String getDataset() {
+  public String getDataset() {
     return dataset;
   }
 
-  protected String getUUID() {
+  public String getUUID() {
     return experimentUuid;
   }
 
-  protected int getStageId() {
+  public int getStageId() {
     return stageId;
   }
   
