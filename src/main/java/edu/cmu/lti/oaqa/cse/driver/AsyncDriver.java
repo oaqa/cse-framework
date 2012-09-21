@@ -34,9 +34,9 @@ import edu.cmu.lti.oaqa.ecd.config.Stage;
 import edu.cmu.lti.oaqa.ecd.config.StagedConfiguration;
 import edu.cmu.lti.oaqa.ecd.config.StagedConfigurationImpl;
 import edu.cmu.lti.oaqa.ecd.driver.SimplePipelineRev803;
-import edu.cmu.lti.oaqa.ecd.driver.strategy.DefaultProcessingStrategy;
-import edu.cmu.lti.oaqa.ecd.driver.strategy.ProcessingStrategy;
 import edu.cmu.lti.oaqa.ecd.flow.FunneledFlow;
+import edu.cmu.lti.oaqa.ecd.flow.strategy.FunnelingStrategy;
+import edu.cmu.lti.oaqa.ecd.impl.DefaultFunnelingStrategy;
 import edu.cmu.lti.oaqa.framework.async.ConsumerManager;
 import edu.cmu.lti.oaqa.framework.async.ConsumerManagerImpl;
 import edu.cmu.lti.oaqa.framework.async.ProducerManager;
@@ -77,11 +77,11 @@ public final class AsyncDriver {
     }
   }
 
-  private ProcessingStrategy getProcessingStrategy() throws ResourceInitializationException {
-    ProcessingStrategy ps = new DefaultProcessingStrategy();
+  private FunnelingStrategy getProcessingStrategy() throws ResourceInitializationException {
+    FunnelingStrategy ps = new DefaultFunnelingStrategy();
     AnyObject map = config.getAnyObject("processing-strategy");
     if (map != null) {
-      ps = BaseExperimentBuilder.loadProvider(map, ProcessingStrategy.class);
+      ps = BaseExperimentBuilder.loadProvider(map, FunnelingStrategy.class);
     }
     return ps;
   }
@@ -114,7 +114,7 @@ public final class AsyncDriver {
   private void runConsumer() throws Exception {
     StagedConfiguration stagedConfig = new StagedConfigurationImpl(config);
     ConsumerManager manager = new ConsumerManagerImpl(builder.getExperimentUuid(), asyncConfig);
-    ProcessingStrategy ps = getProcessingStrategy();
+    FunnelingStrategy ps = getProcessingStrategy();
     try {
       for (Stage stage : stagedConfig) {
         try {
