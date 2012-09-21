@@ -1,1 +1,1 @@
-class: edu.cmu.lti.oaqa.ecd.persistence.DefaultExperimentPersistenceProvider
+class: edu.cmu.lti.oaqa.ecd.impl.DefaultExperimentPersistenceProvider
