@@ -1,0 +1,4 @@
+class: edu.cmu.lti.oaqa.framework.collection.fs.DirCollectionReader
+  
+persistence-provider: |
+  inherit: ecd.default-experiment-persistence-provider

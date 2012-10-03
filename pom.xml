@@ -1,32 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.cmu.lti.oaqa.cse</groupId>
 	<artifactId>cse-framework</artifactId>
 	<version>2.2.1-SNAPSHOT</version>
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
-  <name>Configuration Space Exploration Framework</name>
-  <url>https://github.com/oaqa/cse-framework</url>
-  <issueManagement>
-    <system>github.com</system>
-    <url>https://github.com/oaqa/cse-framework/issues</url>
-  </issueManagement>
-  <inceptionYear>2012</inceptionYear>
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>git@github.com:oaqa/cse-framework.git</url>
-    <connection>scm:git:git@github.com:oaqa/cse-framework.git</connection>
-    <developerConnection>scm:git:git@github.com:oaqa/cse-framework.git</developerConnection>
-  </scm>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	<name>Configuration Space Exploration Framework</name>
+	<url>https://github.com/oaqa/cse-framework</url>
+	<issueManagement>
+		<system>github.com</system>
+		<url>https://github.com/oaqa/cse-framework/issues</url>
+	</issueManagement>
+	<inceptionYear>2012</inceptionYear>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<scm>
+		<url>git@github.com:oaqa/cse-framework.git</url>
+		<connection>scm:git:git@github.com:oaqa/cse-framework.git</connection>
+		<developerConnection>scm:git:git@github.com:oaqa/cse-framework.git</developerConnection>
+	</scm>
 	<build>
 		<plugins>
 			<plugin>
@@ -70,10 +71,15 @@
 			<artifactId>uima-ecd</artifactId>
 			<version>2.2.0</version>
 		</dependency>
-    <dependency>
-      <groupId>mx.bigdata.streaming</groupId>
-      <artifactId>streaming</artifactId>
-      <version>1.0.0</version>
-    </dependency>
+		<dependency>
+			<groupId>mx.bigdata.streaming</groupId>
+			<artifactId>streaming</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.8</version>
+		</dependency>
 	</dependencies>
 </project>

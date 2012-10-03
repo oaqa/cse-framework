@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2012 Carnegie Mellon University
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package edu.cmu.lti.oaqa.framework.collection.fs;
 
 import java.io.FileInputStream;
@@ -26,11 +42,7 @@ public final class FileCollectionReader extends IterableCollectionReader {
     String filename = System.getProperty(FILE_PROPERTY);
     try {
       if (filename == null) {
-        System.err.printf("%s property not specified, using 'file' parameter from configuration\n",
-                FILE_PROPERTY);
-        String resource = (String) getConfigParameterValue("file");
-        InputStream in = getClass().getResourceAsStream(resource);
-        this.reader = buildIterator(in);
+        this.reader = buildIteratorFromFile();
       } else {
         InputStream in = new FileInputStream(filename);
         this.reader = buildIterator(in);
@@ -39,6 +51,19 @@ public final class FileCollectionReader extends IterableCollectionReader {
       throw new ResourceInitializationException(e);
     }
     return reader.iterator();
+  }
+
+  private StreamingRecordReader<DataElement> buildIteratorFromFile() throws IOException {
+    System.err.printf("%s system property not specified, using 'file'" 
+            + " parameter from configuration file\n",FILE_PROPERTY);
+    String resource = (String) getConfigParameterValue("file");
+    if (resource != null) {
+      System.err.printf("Reading file: %s from the classpath\n", resource);
+      InputStream in = getClass().getResourceAsStream(resource);
+      return buildIterator(in);
+    } else {
+      throw new IllegalArgumentException(String.format("Parameter 'file' must be specified"));
+    }
   }
 
   private StreamingRecordReader<DataElement> buildIterator(InputStream in) throws IOException {
