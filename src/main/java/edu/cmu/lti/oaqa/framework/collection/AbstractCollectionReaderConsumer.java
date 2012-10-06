@@ -71,7 +71,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
 
   private int stageId;
   
-  private int lastSequenceId = -1;
+  private String lastSequenceId;
   
   private String dataset;
 
@@ -107,7 +107,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
 
   @Override
   public boolean hasNext() throws IOException, CollectionException {
-    if (lastSequenceId != -1) {
+    if (lastSequenceId != null) {
       try {
         notifyProcessed(dataset, lastSequenceId);
       } catch (JMSException e) {
@@ -127,7 +127,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
       expUuid.setUuid(experimentUuid);
       expUuid.setStageId(stageId);
       expUuid.addToIndexes();
-      int sequenceId = nextElement.getSequenceId();
+      String sequenceId = nextElement.getSequenceId();
       InputElement next = new InputElement(jcas);
       next.setDataset(nextElement.getDataset());
       next.setQuestion(nextElement.getText());
@@ -188,10 +188,10 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
     return new Progress[] { new ProgressImpl(nextInput, -1, Progress.ENTITIES) };
   }
 
-  private void notifyProcessed(String dataset, int sequenceId) throws JMSException {
+  private void notifyProcessed(String dataset, String lastSequenceId2) throws JMSException {
     MapMessage message = producer.createMapMessage();
     message.setString("dataset", dataset);
-    message.setInt("sequenceId", sequenceId);
+    message.setString("sequenceId", lastSequenceId2);
     message.setString("consumerUuid", getConsumerUuid());
     producer.send(message);
   }

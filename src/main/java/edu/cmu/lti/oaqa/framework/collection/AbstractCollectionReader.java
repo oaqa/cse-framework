@@ -41,7 +41,7 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
 
   private String dataset;
   
-  private Set<Integer> topics = Sets.newHashSet();
+  private Set<String> topics = Sets.newHashSet();
 
   private int count = 0;
 

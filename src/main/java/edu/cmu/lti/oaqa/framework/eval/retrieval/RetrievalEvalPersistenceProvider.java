@@ -26,9 +26,9 @@ import edu.cmu.lti.oaqa.framework.eval.ExperimentKey;
 import edu.cmu.lti.oaqa.framework.eval.Key;
 
 public interface RetrievalEvalPersistenceProvider extends Resource {
-  void insertPartialCounts(Key key, int sequenceId, RetrievalCounts counts) throws Exception;
+  void insertPartialCounts(Key key, String sequenceId, RetrievalCounts counts) throws Exception;
 
-  void deletePassageAggrEval(Key key, int sequenceId);
+  void deletePassageAggrEval(Key key, String sequenceId);
   
   void deleteFMeasureEval(ExperimentKey experiment);
   

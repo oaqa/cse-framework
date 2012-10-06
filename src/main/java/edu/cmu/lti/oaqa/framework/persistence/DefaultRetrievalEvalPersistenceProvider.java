@@ -30,13 +30,13 @@ public class DefaultRetrievalEvalPersistenceProvider extends
         AbstractRetrievalEvalPersistenceProvider {
 
   @Override
-  public void insertPartialCounts(Key key, int sequenceId, RetrievalCounts counts) throws Exception {
+  public void insertPartialCounts(Key key, String sequenceId, RetrievalCounts counts) throws Exception {
     // TODO Auto-generated method stub
 
   }
 
   @Override
-  public void deletePassageAggrEval(Key key, int sequenceId) {
+  public void deletePassageAggrEval(Key key, String sequenceId) {
     // TODO Auto-generated method stub
 
   }

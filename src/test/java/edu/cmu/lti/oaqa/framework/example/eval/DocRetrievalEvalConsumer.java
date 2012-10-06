@@ -23,9 +23,9 @@ import org.apache.uima.cas.CASException;
 import org.apache.uima.jcas.JCas;
 
 import com.google.common.base.Function;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
-import com.google.common.primitives.Ints;
 
 import edu.cmu.lti.oaqa.framework.eval.retrieval.RetrievalEvalConsumer;
 import edu.cmu.lti.oaqa.framework.types.OutputElement;
@@ -55,7 +55,7 @@ public class DocRetrievalEvalConsumer extends RetrievalEvalConsumer<OutputElemen
   protected Ordering<OutputElement> getOrdering() {
     return new Ordering<OutputElement>() {
       public int compare(OutputElement left, OutputElement right) {
-        int rankDiff = Ints.compare(left.getSequenceId(),right.getSequenceId());
+        int rankDiff = left.getSequenceId().compareTo(right.getSequenceId());
         if (rankDiff != 0) {
           return rankDiff;
         }

@@ -47,8 +47,6 @@ public final class DirCollectionReader extends IterableCollectionReader {
 
   private static final String DIR_PROPERTY = "openqa.collection.dir";
 
-  private static final Pattern PATTERN = Pattern.compile("([0-9]+).*");
-
   @Override
   protected Iterator<DataElement> getInputSet() throws ResourceInitializationException {
     String filename = System.getProperty(DIR_PROPERTY);
@@ -80,7 +78,7 @@ public final class DirCollectionReader extends IterableCollectionReader {
         Resource resource = resources.next();
         try {
           String content = resource.getContent();
-          int id = resource.getId();
+          String id = resource.getId();
           return new DataElement(getDataset(), id, content, null);
         } catch (IOException e) {
           throw Throwables.propagate(e);
@@ -158,12 +156,8 @@ public final class DirCollectionReader extends IterableCollectionReader {
       }
     }
 
-    public int getId() {
-      Matcher matcher = PATTERN.matcher(name);
-      if (matcher.find()) {
-        return Integer.parseInt(matcher.group(1));
-      }
-      return name.hashCode();
+    public String getId() {
+      return name;
     }
   }
 }

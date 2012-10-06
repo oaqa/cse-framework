@@ -49,7 +49,7 @@ public class RetrievalEvalAggregator<T> extends Resource_ImplBase implements Eva
   }
 
   @Override
-  public void update(Key key, int sequenceId, List<T> docs, List<T> gs, Ordering<T> ordering,
+  public void update(Key key, String sequenceId, List<T> docs, List<T> gs, Ordering<T> ordering,
           Function<T, String> toIdString) throws AnalysisEngineProcessException {
     RetrievalCounts cnt = count(docs, gs, ordering, toIdString);
     try {

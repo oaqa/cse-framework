@@ -58,7 +58,7 @@ public class AdHocDriverTest {
     AdHocDriver driver = new AdHocDriver(builder);
     AdHocSource source = new BaseAdHocSource() {
       public void publish(String quuid, String question) throws InterruptedException {
-        DataElement result = new DataElement("AdHoc Dataset", 100, question, quuid);
+        DataElement result = new DataElement("AdHoc Dataset", "100", question, quuid);
         getReader().putQuestion(result);
       }
     };
