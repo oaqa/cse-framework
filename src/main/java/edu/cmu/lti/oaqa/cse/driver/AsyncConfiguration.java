@@ -26,5 +26,5 @@ public interface AsyncConfiguration extends Resource {
   
   public int getTimeoutMultiplier();
   
-  public Set<Integer> getPublishedTopics(String experiment);
+  public Set<String> getPublishedTopics(String experiment);
 }

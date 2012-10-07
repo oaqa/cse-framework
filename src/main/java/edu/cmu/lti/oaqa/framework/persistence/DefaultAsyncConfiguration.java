@@ -23,7 +23,7 @@ import com.google.common.collect.Sets;
 public class DefaultAsyncConfiguration extends AbstractAsyncConfiguration {
   
   @Override
-  public Set<Integer> getPublishedTopics(String experiment) {
+  public Set<String> getPublishedTopics(String experiment) {
     return Sets.newHashSet();
   }
 }

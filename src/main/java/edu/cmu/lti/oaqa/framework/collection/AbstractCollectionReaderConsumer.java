@@ -188,10 +188,10 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
     return new Progress[] { new ProgressImpl(nextInput, -1, Progress.ENTITIES) };
   }
 
-  private void notifyProcessed(String dataset, String lastSequenceId2) throws JMSException {
+  private void notifyProcessed(String dataset, String lastSequenceId) throws JMSException {
     MapMessage message = producer.createMapMessage();
     message.setString("dataset", dataset);
-    message.setString("sequenceId", lastSequenceId2);
+    message.setString("sequenceId", lastSequenceId);
     message.setString("consumerUuid", getConsumerUuid());
     producer.send(message);
   }
