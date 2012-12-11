@@ -17,6 +17,9 @@
 package edu.cmu.lti.oaqa.cse.driver;
 
 import java.util.UUID;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import mx.bigdata.anyobject.AnyObject;
 
@@ -54,6 +57,8 @@ public final class AsyncDriver {
 
   private final AnyObject localConfig;
 
+  private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
   public AsyncDriver(String resource, String uuid, OpMode op) throws Exception {
     this.opMode = op;
     this.localConfig = ConfigurationLoader.load(resource);
@@ -66,7 +71,8 @@ public final class AsyncDriver {
     }
     TypeSystemDescription typeSystem = TypeSystemDescriptionFactory.createTypeSystemDescription();
     this.builder = new BaseExperimentBuilder(uuid, resource, typeSystem);
-    this.asyncConfig = builder.initializeResource(config, "async-configuration", AsyncConfiguration.class);
+    this.asyncConfig = builder.initializeResource(config, "async-configuration",
+            AsyncConfiguration.class);
   }
 
   public void run() throws Exception {
@@ -90,20 +96,31 @@ public final class AsyncDriver {
     StagedConfiguration stagedConfig = new StagedConfigurationImpl(config);
     ProducerManager manager = new ProducerManagerImpl(builder.getExperimentUuid(), asyncConfig);
     try {
-      for (Stage stage : stagedConfig) {
+      for (final Stage stage : stagedConfig) {
+        scheduler.scheduleWithFixedDelay(new Runnable() {
+          @Override
+          public void run() {
+            try {
+              CollectionReader postReader = builder.buildCollectionReader(localConfig,
+                      stage.getId());
+              AnalysisEngine post = builder.buildPipeline(stage.getConfiguration(), "post-process",
+                      stage.getId());
+              SimplePipelineRev803.runPipeline(postReader, post);
+            } catch (Exception e) {
+              System.err.println("Error executing post-process");
+              e.printStackTrace();
+            }
+          }
+        }, 10, 10, TimeUnit.MINUTES);
         AnyObject conf = stage.getConfiguration();
         CollectionReader reader = builder.buildCollectionReader(conf, stage.getId());
         AnalysisEngine noOp = builder.createNoOpEngine();
         SimplePipelineRev803.runPipeline(reader, noOp);
-        //Progress progress = reader.getProgress()[0];
-        //long total = progress.getCompleted();
+        // Progress progress = reader.getProgress()[0];
+        // long total = progress.getCompleted();
         manager.waitForReaderCompletion();
         manager.notifyCloseCollectionReaders();
         manager.waitForProcessCompletion();
-        CollectionReader postReader = builder.buildCollectionReader(localConfig, stage.getId());
-        AnalysisEngine post = builder.buildPipeline(stage.getConfiguration(), "post-process",
-                stage.getId());
-        SimplePipelineRev803.runPipeline(postReader, post);
         manager.notifyNextConfigurationIsReady();
       }
     } finally {
