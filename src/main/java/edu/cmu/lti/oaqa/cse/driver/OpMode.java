@@ -17,5 +17,5 @@
 package edu.cmu.lti.oaqa.cse.driver;
 
 enum OpMode {
-  PRODUCER, CONSUMER;
+  PRODUCER, CONSUMER, REPORT;
 }

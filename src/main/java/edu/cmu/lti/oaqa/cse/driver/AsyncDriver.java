@@ -62,7 +62,7 @@ public final class AsyncDriver {
   public AsyncDriver(String resource, String uuid, OpMode op) throws Exception {
     this.opMode = op;
     this.localConfig = ConfigurationLoader.load(resource);
-    if (opMode == OpMode.PRODUCER) {
+    if (opMode == OpMode.PRODUCER || opMode == OpMode.REPORT) {
       resource += "-producer";
       this.config = ConfigurationLoader.load(resource);
     } else {
@@ -78,6 +78,8 @@ public final class AsyncDriver {
   public void run() throws Exception {
     if (opMode == OpMode.PRODUCER) {
       runProducer();
+    } else if (opMode == OpMode.REPORT) {
+      runReport();
     } else {
       runConsumer();
     }
@@ -122,6 +124,26 @@ public final class AsyncDriver {
         manager.notifyCloseCollectionReaders();
         manager.waitForProcessCompletion();
         manager.notifyNextConfigurationIsReady();
+      }
+    } finally {
+      manager.close();
+    }
+  }
+
+  private void runReport() throws Exception {
+    StagedConfiguration stagedConfig = new StagedConfigurationImpl(config);
+    ProducerManager manager = new ProducerManagerImpl(builder.getExperimentUuid(), asyncConfig);
+    try {
+      for (final Stage stage : stagedConfig) {
+        try {
+          CollectionReader postReader = builder.buildCollectionReader(localConfig, stage.getId());
+          AnalysisEngine post = builder.buildPipeline(stage.getConfiguration(), "post-process",
+                  stage.getId());
+          SimplePipelineRev803.runPipeline(postReader, post);
+        } catch (Exception e) {
+          System.err.println("Error executing post-process");
+          e.printStackTrace();
+        }
       }
     } finally {
       manager.close();
