@@ -126,6 +126,7 @@ public final class AsyncDriver {
         manager.notifyNextConfigurationIsReady();
       }
     } finally {
+      scheduler.shutdown();
       manager.close();
     }
   }
