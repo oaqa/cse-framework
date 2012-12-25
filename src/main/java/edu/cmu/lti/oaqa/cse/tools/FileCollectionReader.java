@@ -114,7 +114,7 @@ public class FileCollectionReader extends CollectionReader_ImplBase {
         next.setDataset(dataset);
         next.setQuestion(questionText);
         next.setAnswerPattern("");
-        next.setSequenceId(Integer.parseInt(questionId));
+        next.setSequenceId(questionId);
         next.addToIndexes();
       }
       count++;

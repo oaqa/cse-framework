@@ -43,7 +43,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
 
   private int count = 0;
   
-  private Set<Integer> topics = Sets.newHashSet();
+  private Set<String> topics = Sets.newHashSet();
 
   private ActiveMQQueueProducer producer;
   
@@ -76,7 +76,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
       DataElement nextElement = getNextFromSource();
       MapMessage message = producer.createMapMessage();
       message.setString("dataset", getDataset());
-      message.setInt("sequenceId", nextElement.getSequenceId());
+      message.setString("sequenceId", nextElement.getSequenceId());
       message.setInt("stageId", getStageId());
       producer.send(message);
       topics.add(nextElement.getSequenceId());

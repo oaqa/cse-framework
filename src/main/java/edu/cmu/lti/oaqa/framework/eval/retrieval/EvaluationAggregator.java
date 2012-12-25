@@ -28,6 +28,7 @@ import edu.cmu.lti.oaqa.framework.eval.Key;
 
 public interface EvaluationAggregator<T> extends Resource {
 
-  void update(Key key, int sequenceId, List<T> docs, List<T> goldStandard, Ordering<T> ordering, Function<T, String> toIdString) throws AnalysisEngineProcessException;
+  void update(Key key, String sequenceId, List<T> docs, List<T> goldStandard, Ordering<T> ordering, Function<T, String> toIdString) throws AnalysisEngineProcessException;
 
 }
+  

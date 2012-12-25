@@ -69,9 +69,9 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
 
   @Override
   public void waitForReaderCompletion() throws JMSException {
-    Set<Integer> topics = config.getPublishedTopics(experimentUuid);
+    Set<String> topics = config.getPublishedTopics(experimentUuid);
     int total = topics.size();
-    Set<Integer> set = Sets.newHashSet(topics);
+    Set<String> set = Sets.newHashSet(topics);
     int count = 0;
     consumers.clear();
     long timeout = Long.MAX_VALUE;
@@ -85,7 +85,7 @@ public class ProducerManagerImpl implements ProducerManager, MessageListener {
         System.err.printf("Timed out waiting for completion processed %s of %s (timeout @ %s ms)\n", count, total, timeout);
         break;
       }
-      set.remove(msg.getInt("sequenceId"));
+      set.remove(msg.getString("sequenceId"));
       long received = System.currentTimeMillis();
       String consumerUuid = msg.getString("consumerUuid");
       consumers.add(consumerUuid);

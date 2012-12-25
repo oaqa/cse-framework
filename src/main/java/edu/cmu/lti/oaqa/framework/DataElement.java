@@ -20,13 +20,13 @@ public class DataElement {
 
   private final String dataset;
 
-  private final int sequenceId;
+  private final String sequenceId;
 
   private final String text;
   
   private final String quuid;
 
-  public DataElement(String dataset, int sequenceId, String question, String quuid) {
+  public DataElement(String dataset, String sequenceId, String question, String quuid) {
     this.dataset = dataset;
     this.sequenceId = sequenceId;
     this.text = question;
@@ -37,7 +37,7 @@ public class DataElement {
     return dataset;
   }
 
-  public int getSequenceId() {
+  public String getSequenceId() {
     return sequenceId;
   }
 

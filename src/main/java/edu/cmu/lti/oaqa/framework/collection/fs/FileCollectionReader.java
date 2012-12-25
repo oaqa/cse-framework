@@ -80,7 +80,7 @@ public final class FileCollectionReader extends IterableCollectionReader {
     @Override
     public DataElement build(String line) {
       String[] data = line.split("\\|");
-      return new DataElement(getDataset(), Integer.parseInt(data[0]), data[1], null);
+      return new DataElement(getDataset(), data[0], data[1], null);
     }
   }
 }
