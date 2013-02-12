@@ -5,8 +5,6 @@ cse-framework
 
 The Configuration Space Exploration Framework, is a project to enable large-scale distributed experimentation. 
 
-The CSE is built on top of the UIMA framework.
+The CSE is an ongoing effort to generate a framework that can find optimal configurations given time and resources constraints.
 
-As an example of what can be achieved, we have run experiments on question answering that explore ~ 3000 
-different configuration options. 
-That experiment took 600 compute-hours, and was completed in about 25 wall-clock hours.
+The CSE-Framework is built on top of [UIMA](http://uima.apache.org/).
