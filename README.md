@@ -5,6 +5,6 @@ cse-framework
 
 The Configuration Space Exploration Framework, is a project to enable large-scale distributed experimentation. 
 
-The CSE is a core component of the OAQA project, whose objective is to provide a framework for finding
+The CSE is a core component of the OAQA project, its objective is to build a framework for searching
 optimal experiment configurations, given time and resource constraints.
 
