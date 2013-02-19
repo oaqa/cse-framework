@@ -8,3 +8,4 @@ The Configuration Space Exploration Framework, is a project to enable large-scal
 The CSE is a core component of the OAQA project, its objective is to build a framework for searching
 optimal experiment configurations, given time and resource constraints.
 
+For more information please refer to the [OAQA tutorial](https://github.com/oaqa/oaqa-tutorial/wiki/Tutorial).
