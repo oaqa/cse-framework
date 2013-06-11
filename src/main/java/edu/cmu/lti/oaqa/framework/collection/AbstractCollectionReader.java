@@ -104,7 +104,7 @@ public abstract class AbstractCollectionReader extends CollectionReader_ImplBase
       decorate(jcas);
       topics.add(nextElement.getSequenceId());
       count++;
-      //persistence.updateExperimentMeta(getUUID(), count);
+      persistence.updateExperimentMeta(getUUID(), count);
     } catch (Exception e) {
       throw new CollectionException(e);
     }
