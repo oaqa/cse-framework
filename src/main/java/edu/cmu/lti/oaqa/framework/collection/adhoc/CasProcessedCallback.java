@@ -21,5 +21,7 @@ import org.apache.uima.cas.CAS;
 public interface CasProcessedCallback {
 
   void entityProcessComplete(CAS aCas);
+  
+  void collectionProcessComplete();
 
 }

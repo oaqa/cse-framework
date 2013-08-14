@@ -107,5 +107,11 @@ public class AdHocDriverTest {
       }
       return result;
     }
+
+    @Override
+    public void collectionProcessComplete() {
+      // TODO Auto-generated method stub
+      
+    }
   }
 }

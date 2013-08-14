@@ -99,5 +99,6 @@ public final class AdHocDriver {
       callback.entityProcessComplete(output);
       output.release();
     }
+    callback.collectionProcessComplete();
   }
 }
