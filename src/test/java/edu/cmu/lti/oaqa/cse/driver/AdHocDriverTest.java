@@ -27,13 +27,13 @@ import java.util.UUID;
 
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
+import org.apache.uima.fit.factory.TypeSystemDescriptionFactory;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.resource.metadata.TypeSystemDescription;
 import org.junit.Test;
 import org.oaqa.model.test.Passage;
 import org.oaqa.model.test.Search;
-import org.uimafit.factory.TypeSystemDescriptionFactory;
 
 import com.google.common.collect.Lists;
 
