@@ -103,7 +103,7 @@ public abstract class AbstractCollectionReaderProducer extends CollectionReader_
   @Override
   public void close() throws IOException {
     persistence.updateExperimentMeta(getUUID(), count, topics);
-    Closeables.closeQuietly(producer);
+    Closeables.close(producer, true);
   }
 
 }

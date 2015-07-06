@@ -207,7 +207,7 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
       // TODO: Synchronize lock?
       if (message.getText().equals(experimentUuid)) {
         processing = false;
-        Closeables.closeQuietly(consumer);
+        Closeables.close(consumer, true);
       }
     } catch (Exception e) {
       System.err.println("Unable to process message: " + message);
@@ -217,9 +217,9 @@ public abstract class AbstractCollectionReaderConsumer extends CollectionReader_
   @Override
   public void close() throws IOException {
     System.out.printf("(%s) Closing connections!!\n", stageId);
-    Closeables.closeQuietly(consumer);
-    Closeables.closeQuietly(producer);
-    Closeables.closeQuietly(closeListener);
+    Closeables.close(consumer, true);
+    Closeables.close(producer, true);
+    Closeables.close(closeListener, true);
   }
 
 }
