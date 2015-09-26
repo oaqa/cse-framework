@@ -24,6 +24,8 @@ import com.google.common.hash.Hashing;
 
 import edu.cmu.lti.oaqa.ecd.phase.Trace;
 
+import java.nio.charset.StandardCharsets;
+
 public final class Key {
   private final String experiment;
 
@@ -44,8 +46,8 @@ public final class Key {
   public String hashString() {
     HashFunction hf = Hashing.sha256();
     Hasher hasher = hf.newHasher();
-    hasher.putString(getExperiment());
-    hasher.putString(getTrace().getTrace());
+    hasher.putString(getExperiment(), StandardCharsets.UTF_16LE);
+    hasher.putString(getTrace().getTrace(), StandardCharsets.UTF_16LE);
     HashCode hash = hasher.hash();
     return hash.toString();
   }
